@@ -1,0 +1,1 @@
+"""Impurity module for DecisionTrees."""
