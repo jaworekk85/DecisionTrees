@@ -26,6 +26,7 @@ from matplotlib.lines import Line2D
 
 RESULTS_PATH = Path("results") / "vfdt_first_split_reliability.csv"
 PLOTS_DIR = Path("results") / "plots"
+PANEL_PARENT_PROBABILITIES = [0.2, 0.3, 0.4, 0.5]
 
 IMPURITY_LABELS = {
     "gini": "Gini",
@@ -193,7 +194,15 @@ def plot_margin_vs_threshold_by_p(
 ) -> Path:
     path = PLOTS_DIR / "vfdt_margin_vs_threshold_by_p.png"
     split_rows = [row for row in rows if bool(row["split_occurred"])]
-    parent_probabilities = sorted({float(row["p"]) for row in split_rows})
+    available_parent_probabilities = sorted({float(row["p"]) for row in split_rows})
+    parent_probabilities = [
+        parent_probability
+        for parent_probability in PANEL_PARENT_PROBABILITIES
+        if any(
+            abs(parent_probability - available_parent_probability) < 1e-12
+            for available_parent_probability in available_parent_probabilities
+        )
+    ]
 
     fig, axes = plt.subplots(
         2,

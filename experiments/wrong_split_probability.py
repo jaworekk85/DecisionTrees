@@ -19,6 +19,7 @@ from impurity.base import Impurity
 
 
 RESULTS_PATH = Path("results") / "wrong_split_probability.csv"
+DENSE_PARENT_PROBABILITIES = [round(0.2 + 0.025 * index, 3) for index in range(13)]
 
 
 @dataclass(frozen=True)
@@ -100,7 +101,7 @@ def run_experiment(
     repetitions: int = 2000,
     seed: int = 20260428,
 ) -> List[dict[str, float | int | str | None]]:
-    parent_probabilities = [0.2, 0.3, 0.4, 0.5]
+    parent_probabilities = DENSE_PARENT_PROBABILITIES
     sample_sizes = [25, 50, 100, 200, 500, 1000, 2000]
     specs = impurity_specs(epsilon=epsilon)
     rng = np.random.default_rng(seed)

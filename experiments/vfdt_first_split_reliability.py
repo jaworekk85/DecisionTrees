@@ -20,6 +20,7 @@ from tree.vfdt_like import VFDTLikeTree
 
 
 RESULTS_PATH = Path("results") / "vfdt_first_split_reliability.csv"
+DENSE_PARENT_PROBABILITIES = [round(0.2 + 0.025 * index, 3) for index in range(13)]
 
 
 @dataclass(frozen=True)
@@ -155,7 +156,7 @@ def run_experiment(
     seed: int = 20260428,
 ) -> List[dict[str, float | int | str | bool | None]]:
     rows: List[dict[str, float | int | str | bool | None]] = []
-    parent_probabilities = [0.2, 0.3, 0.4, 0.5]
+    parent_probabilities = DENSE_PARENT_PROBABILITIES
 
     for p_index, parent_probability in enumerate(parent_probabilities):
         probability_min = parent_probability - delta_a - delta_b

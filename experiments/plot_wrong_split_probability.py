@@ -28,6 +28,7 @@ import numpy as np
 
 RESULTS_PATH = Path("results") / "wrong_split_probability.csv"
 PLOTS_DIR = Path("results") / "plots"
+PANEL_PARENT_PROBABILITIES = [0.2, 0.3, 0.4, 0.5]
 
 IMPURITY_LABELS = {
     "gini": "Gini",
@@ -72,7 +73,15 @@ def plot_wrong_split_probability_by_p(rows: List[dict[str, str | float]]) -> Pat
     path = PLOTS_DIR / "wrong_split_probability_vs_sample_size_by_p.png"
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    parent_probabilities = sorted({float(row["p"]) for row in rows})
+    available_parent_probabilities = sorted({float(row["p"]) for row in rows})
+    parent_probabilities = [
+        parent_probability
+        for parent_probability in PANEL_PARENT_PROBABILITIES
+        if any(
+            abs(parent_probability - available_parent_probability) < 1e-12
+            for available_parent_probability in available_parent_probabilities
+        )
+    ]
     n_cols = 2
     n_rows = int(np.ceil(len(parent_probabilities) / n_cols))
     fig, axes = plt.subplots(
@@ -86,7 +95,11 @@ def plot_wrong_split_probability_by_p(rows: List[dict[str, str | float]]) -> Pat
     flat_axes = list(np.ravel(axes))
 
     for axis, parent_probability in zip(flat_axes, parent_probabilities):
-        p_rows = [row for row in rows if float(row["p"]) == parent_probability]
+        p_rows = [
+            row
+            for row in rows
+            if abs(float(row["p"]) - parent_probability) < 1e-12
+        ]
         grouped: Dict[str, List[dict[str, str | float]]] = defaultdict(list)
         for row in p_rows:
             grouped[str(row["impurity"])].append(row)
@@ -274,7 +287,6 @@ def main() -> None:
     paths = [
         plot_wrong_split_probability_by_p(rows),
         plot_wrong_split_probability_over_p(rows),
-        plot_wrong_split_probability_single_p(rows, parent_probability=0.5),
     ]
     for path in paths:
         print(path)
