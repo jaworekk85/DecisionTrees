@@ -28,12 +28,14 @@ def _make_random_tree(
     available_features: Sequence[int],
     depth: int,
     max_depth: int,
+    min_leaf_depth: int,
     split_prob: float,
     leaf_prob_min: float,
     leaf_prob_max: float,
 ) -> _RandomTreeNode:
     must_stop = depth >= max_depth or len(available_features) == 0
-    should_split = (not must_stop) and rng.random() < split_prob
+    must_split = depth < min_leaf_depth and len(available_features) > 0
+    should_split = must_split or ((not must_stop) and rng.random() < split_prob)
 
     if not should_split:
         prob_class_one = float(rng.uniform(leaf_prob_min, leaf_prob_max))
@@ -53,6 +55,7 @@ def _make_random_tree(
             available_features=child_features,
             depth=depth + 1,
             max_depth=max_depth,
+            min_leaf_depth=min_leaf_depth,
             split_prob=split_prob,
             leaf_prob_min=leaf_prob_min,
             leaf_prob_max=leaf_prob_max,
@@ -62,6 +65,7 @@ def _make_random_tree(
             available_features=child_features,
             depth=depth + 1,
             max_depth=max_depth,
+            min_leaf_depth=min_leaf_depth,
             split_prob=split_prob,
             leaf_prob_min=leaf_prob_min,
             leaf_prob_max=leaf_prob_max,
@@ -85,6 +89,8 @@ def generate_random_tree_stream(
     n_features: int = 6,
     max_depth: int = 4,
     split_prob: float = 0.9,
+    omega: Optional[float] = None,
+    min_leaf_depth: int = 0,
     leaf_prob_min: float = 0.05,
     leaf_prob_max: float = 0.95,
     feature_prob: float = 0.5,
@@ -105,6 +111,15 @@ def generate_random_tree_stream(
         raise ValueError(f"n_features must be positive, got {n_features}")
     if max_depth < 0:
         raise ValueError(f"max_depth must be non-negative, got {max_depth}")
+    if min_leaf_depth < 0:
+        raise ValueError(f"min_leaf_depth must be non-negative, got {min_leaf_depth}")
+    if min_leaf_depth > max_depth:
+        raise ValueError(
+            f"min_leaf_depth must not exceed max_depth, got {min_leaf_depth} > {max_depth}"
+        )
+    if omega is not None:
+        _validate_probability("omega", omega)
+        split_prob = 1.0 - omega
     _validate_probability("split_prob", split_prob)
     _validate_probability("leaf_prob_min", leaf_prob_min)
     _validate_probability("leaf_prob_max", leaf_prob_max)
@@ -124,6 +139,7 @@ def generate_random_tree_stream(
         available_features=tuple(range(n_features)),
         depth=0,
         max_depth=max_depth,
+        min_leaf_depth=min_leaf_depth,
         split_prob=split_prob,
         leaf_prob_min=leaf_prob_min,
         leaf_prob_max=leaf_prob_max,

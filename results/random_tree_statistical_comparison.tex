@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Paired statistical comparison on the random-tree stream benchmark. Differences are computed over paired blocks $(d_{\mathrm{attr}},\omega,\mathrm{seed})$. Confidence intervals are bootstrap $95\%$ intervals; $p$-values are paired randomization tests with Holm correction.}
+\label{tab:random_tree_statistical_comparison}
+\begin{tabular}{llccc}
+\hline
+Comparison & Metric & Difference & 95\% CI & $p_{\mathrm{Holm}}$ \\
+\hline
+RQ-local - Gini & AUC & 0.0343 & [0.0272, 0.0422] & $<0.001$ \\
+RQ-local - Gini & Final acc. & 0.0357 & [0.0286, 0.0435] & $<0.001$ \\
+RQ-local - Gini & Splits & 23.9778 & [19.6000, 28.6778] & $<0.001$ \\
+RQ-global - Gini & AUC & 0.0035 & [0.0024, 0.0048] & $<0.001$ \\
+RQ-global - Gini & Final acc. & 0.0042 & [0.0028, 0.0058] & $<0.001$ \\
+RQ-global - Gini & Splits & 2.3667 & [1.4778, 3.4778] & $<0.001$ \\
+RE-local - Entropy & AUC & 0.0400 & [0.0321, 0.0488] & $<0.001$ \\
+RE-local - Entropy & Final acc. & 0.0430 & [0.0343, 0.0526] & $<0.001$ \\
+RE-local - Entropy & Splits & 24.2000 & [19.9444, 28.5667] & $<0.001$ \\
+RE-global - Entropy & AUC & 0.0088 & [0.0068, 0.0109] & $<0.001$ \\
+RE-global - Entropy & Final acc. & 0.0110 & [0.0077, 0.0150] & $<0.001$ \\
+RE-global - Entropy & Splits & 3.8222 & [2.6667, 5.1444] & $<0.001$ \\
+\hline
+\end{tabular}
+\end{table}
