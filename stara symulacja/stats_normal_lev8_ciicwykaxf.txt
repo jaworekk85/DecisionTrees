@@ -1,0 +1,155 @@
+parent statistics: 
+n: 4
+attr 0 : [[2. 2.]
+ [0. 0.]]
+attr 1 : [[0. 0.]
+ [2. 2.]]
+attr 2 : [[0. 0.]
+ [2. 2.]]
+attr 3 : [[0. 0.]
+ [2. 2.]]
+attr 4 : [[0. 0.]
+ [2. 2.]]
+attr 5 : [[2. 2.]
+ [0. 0.]]
+attr 6 : [[0. 0.]
+ [2. 2.]]
+attr 7 : [[0. 0.]
+ [2. 2.]]
+attr 8 : [[2. 2.]
+ [0. 0.]]
+attr 9 : [[2. 0.]
+ [0. 2.]]
+class frequencies: 
+[0.5 0.5]
+fractions for attributes: 
+attr 0 : [1. 0.]
+attr 1 : [0. 1.]
+attr 2 : [0. 1.]
+attr 3 : [0. 1.]
+attr 4 : [0. 1.]
+attr 5 : [1. 0.]
+attr 6 : [0. 1.]
+attr 7 : [0. 1.]
+attr 8 : [1. 0.]
+attr 9 : [0.5 0.5]
+class frequencies for attributes: 
+attr 0 : [[0.5 0.5]
+ [0.  0. ]]
+attr 1 : [[0.  0. ]
+ [0.5 0.5]]
+attr 2 : [[0.  0. ]
+ [0.5 0.5]]
+attr 3 : [[0.  0. ]
+ [0.5 0.5]]
+attr 4 : [[0.  0. ]
+ [0.5 0.5]]
+attr 5 : [[0.5 0.5]
+ [0.  0. ]]
+attr 6 : [[0.  0. ]
+ [0.5 0.5]]
+attr 7 : [[0.  0. ]
+ [0.5 0.5]]
+attr 8 : [[0.5 0.5]
+ [0.  0. ]]
+attr 9 : [[1. 0.]
+ [0. 1.]]
+measures for attributes: 
+attr 0 : 0.5
+attr 1 : 0.5
+attr 2 : 0.5
+attr 3 : 0.5
+attr 4 : 0.5
+attr 5 : 0.5
+attr 6 : 0.5
+attr 7 : 0.5
+attr 8 : 0.5
+attr 9 : 0.0
+measure for attr 0 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 1 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 2 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 3 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 4 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 5 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 6 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 7 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 8 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+measure for attr 9 : [0.  0.  0.  0.  0.  0.  0.  0.  0.  0.5]
+
+kid nr 0 statistics: 
+n: 0
+attr 0 : [[0. 0.]
+ [0. 0.]]
+attr 1 : [[0. 0.]
+ [0. 0.]]
+attr 2 : [[0. 0.]
+ [0. 0.]]
+attr 3 : [[0. 0.]
+ [0. 0.]]
+attr 4 : [[0. 0.]
+ [0. 0.]]
+attr 5 : [[0. 0.]
+ [0. 0.]]
+attr 6 : [[0. 0.]
+ [0. 0.]]
+attr 7 : [[0. 0.]
+ [0. 0.]]
+attr 8 : [[0. 0.]
+ [0. 0.]]
+attr 9 : [[0. 0.]
+ [0. 0.]]
+class frequencies: 
+[0. 0.]
+fractions for attributes: 
+attr 0 : [0. 0.]
+attr 1 : [0. 0.]
+attr 2 : [0. 0.]
+attr 3 : [0. 0.]
+attr 4 : [0. 0.]
+attr 5 : [0. 0.]
+attr 6 : [0. 0.]
+attr 7 : [0. 0.]
+attr 8 : [0. 0.]
+attr 9 : [0. 0.]
+class frequencies for attributes: 
+attr 0 : [[0. 0.]
+ [0. 0.]]
+attr 1 : [[0. 0.]
+ [0. 0.]]
+attr 2 : [[0. 0.]
+ [0. 0.]]
+attr 3 : [[0. 0.]
+ [0. 0.]]
+attr 4 : [[0. 0.]
+ [0. 0.]]
+attr 5 : [[0. 0.]
+ [0. 0.]]
+attr 6 : [[0. 0.]
+ [0. 0.]]
+attr 7 : [[0. 0.]
+ [0. 0.]]
+attr 8 : [[0. 0.]
+ [0. 0.]]
+attr 9 : [[0. 0.]
+ [0. 0.]]
+measures for attributes: 
+attr 0 : 0.0
+attr 1 : 0.0
+attr 2 : 0.0
+attr 3 : 0.0
+attr 4 : 0.0
+attr 5 : 0.0
+attr 6 : 0.0
+attr 7 : 0.0
+attr 8 : 0.0
+attr 9 : 0.0
+measure for attr 0 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 1 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 2 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 3 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 4 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 5 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 6 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 7 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 8 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]
+measure for attr 9 : [1. 1. 1. 1. 1. 1. 1. 1. 1. 1.]

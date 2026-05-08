@@ -1,0 +1,11 @@
+Original loose gentree files that were intended for archiving:
+
+gentree_0.txt
+gentree_1.txt
+gentree_2.txt
+gentree_3.txt
+gentree_4.txt
+gentree_5.txt
+gentree_6.txt
+gentree_7.txt
+stara symulacja/gentree_0.txt

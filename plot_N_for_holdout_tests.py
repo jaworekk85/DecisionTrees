@@ -1,0 +1,104 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pickle
+import math
+
+MAIN_FOLDER = ''
+
+
+def getNewNsList(oldlist, hNs):
+    def findClosestIndex(n, hNs):
+        closest_idx = 0
+        min_diff = abs(n - hNs[0])
+        for i in range(1, len(hNs)):
+            diff = abs(n - hNs[i])
+            if diff < min_diff:
+                min_diff = diff
+                closest_idx = i
+        return closest_idx
+
+    return [findClosestIndex(n, hNs) for n in oldlist]
+
+
+def plot_N(list_of_list_of_cores, list_of_legends, xs, label_x, measure_y, output_file, std, Ns_list, scale, hflag=False):
+    Ns_list_temp = Ns_list
+    holdout_n_list = None
+
+    if hflag:
+        first_core = list_of_list_of_cores[0][0]
+        core2 = first_core + '_avg' if std else first_core
+        with open(MAIN_FOLDER + core2 + '.pkl', 'rb') as f:
+            data = pickle.load(f)
+            holdout_n_list = data['holdout_n']
+        Ns_list_temp = getNewNsList(Ns_list, holdout_n_list)
+        print('new Ns_list: ', Ns_list_temp)
+        print('new Ns: ', [holdout_n_list[i] for i in Ns_list_temp])
+
+    avgs = []
+    stds = []
+    lowers = []
+    uppers = []
+    colors = ['k', 'c', 'g', 'r', 'm', 'b', 'y']
+    for list_of_cores in list_of_list_of_cores:
+        avgs.append([])
+        stds.append([])
+        lowers.append([])
+        uppers.append([])
+        for core in list_of_cores:
+            print('core: ', core)
+            core2 = core
+            if std:
+                core2 = core2 + '_avg'
+            with open(MAIN_FOLDER + core2 + '.pkl', 'rb') as f:
+                avgs[-1].append(np.array(pickle.load(f)[measure_y]))
+            if std:
+                with open(MAIN_FOLDER + core + '_std.pkl', 'rb') as f:
+                    stds[-1].append(np.array(pickle.load(f)[measure_y]))
+                lowers[-1].append(np.array(avgs[-1][-1]) - np.array(stds[-1][-1]))
+                uppers[-1].append(np.array(avgs[-1][-1]) + np.array(stds[-1][-1]))
+        print('plotting...')
+
+    for Nn in Ns_list_temp:
+        plt.clf()
+        plt.xlabel(label_x)
+        plt.ylabel(measure_y)
+        plt.xscale(scale)
+        for plts in range(len(avgs)):
+            values = []
+            lws = []
+            ups = []
+            for i in range(len(avgs[plts])):
+                values.append(avgs[plts][i][Nn])
+                if std:
+                    lws.append(lowers[plts][i][Nn])
+                    ups.append(uppers[plts][i][Nn])
+            plt.plot(xs, values, color=colors[plts], label=list_of_legends[plts])
+            if std:
+                plt.fill_between(xs, lws, ups, color=colors[plts], alpha=.2)
+        plt.legend()
+        Nn_string = Nn
+        if hflag:
+            Nn_string = int(holdout_n_list[Nn])
+        plt.savefig(MAIN_FOLDER + output_file + '_' + measure_y + '_N' + str(Nn_string) + '.png')
+
+
+if __name__ == '__main__':
+    list_of_legends = ['sufficient statistics', 'extended_statistics']
+
+    param1 = ['t010', 't025', 't050', 't075', 't100']
+    param2 = ['hf01', 'hf025', 'hf05', 'hf075', 'hf1']
+
+    measures_y = ['holdout_m', 'holdout_b']
+
+    for gid in range(8):
+        list1 = ['hg' + core + '_gid' + str(gid) + '_' for core in param1]
+        list2 = [core + 'ES_' for core in list1]
+        xs = [0.01, 0.025, 0.05, 0.075, 0.1]
+        for my in measures_y:
+            plot_N([list1, list2], list_of_legends, xs, r'tie breaking parameter $\tau$', my, 'tau_gid' + str(gid), True, [100, 1000, 10000, 100000, 1000000], 'linear', True)
+
+        list1 = ['hg' + core + '_gid' + str(gid) + '_' for core in param2]
+        list2 = [core + 'ES_' for core in list1]
+        xs = [0.1, 0.25, 0.5, 0.75, 1]
+        for my in measures_y:
+            plot_N([list1, list2], list_of_legends, xs, 'fraction of original Hoeffding\'s bound', my, 'hf_gid' + str(gid), True, [100, 1000, 10000, 100000, 1000000], 'linear', True)
