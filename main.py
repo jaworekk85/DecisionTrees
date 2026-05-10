@@ -8,10 +8,16 @@ from Tree import Tree
 import matplotlib.pyplot as plt
 import pickle
 import math
+import os
 
 from multiprocessing import Process
 
-MAIN_FOLDER = 'D:\\mj\\'
+RESULTS_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
+MAIN_FOLDER = RESULTS_FOLDER + os.sep
+TREE_FOLDER = os.path.join(RESULTS_FOLDER, 'trees')
+GENERATOR_FOLDER = os.path.join(RESULTS_FOLDER, 'generators')
+for folder in [RESULTS_FOLDER, TREE_FOLDER, GENERATOR_FOLDER]:
+    os.makedirs(folder, exist_ok=True)
 
 def create_a_problem(process, genID, gen, preq_l, W, N, holdout_dataset, holdout_steps):
 
@@ -119,11 +125,12 @@ def create_a_problem(process, genID, gen, preq_l, W, N, holdout_dataset, holdout
         if i in holdout_steps:
             for tree in tree_list:
                 tree.holdout_test(holdout_dataset, i)
+                tree.measure_memory(i)
 
     t = 0
     for tree in tree_list:
         tree.toFile()
-        tree.save_tree('proc_' + str(process)+'genID_'+str(genID)+'_drzewo_powstale_'+str(t)+'.txt')
+        tree.save_tree(os.path.join(TREE_FOLDER, 'proc_' + str(process)+'genID_'+str(genID)+'_drzewo_powstale_'+str(t)+'.txt'))
         t = t+1
 
 
@@ -301,12 +308,12 @@ if __name__ == '__main__':
         for wi in range(len(w)):
             generators.append(Generator())
             generators[-1].create(d[di], mind, maxd, w[wi])
-            #generators[-1].load_tree('gentree_'+str(di*len(w)+wi)+'.txt')
+            #generators[-1].load_tree(os.path.join(GENERATOR_FOLDER, 'gentree_'+str(di*len(w)+wi)+'.txt'))
 
     print(generators)
 
     #for ig in range(len(d)*len(w)):
-    #    generators[ig].save_tree('gentree_'+str(ig)+'.txt')
+    #    generators[ig].save_tree(os.path.join(GENERATOR_FOLDER, 'gentree_'+str(ig)+'.txt'))
 
     hN = 2000
     holdouts = []
@@ -412,6 +419,7 @@ if __name__ == '__main__':
                 plot(list_of_cores, list_of_legends, None, my, coref, std=True, step=100)
             plot(list_of_cores, list_of_legends, 'holdout_n', 'holdout_m', coref, std=True, step=1)
             plot(list_of_cores, list_of_legends, 'holdout_n', 'holdout_b', coref, std=True, step=1)
+            plot(list_of_cores, list_of_legends, 'memory_n', 'memory_mb', coref, std=True, step=1)
             plot(list_of_cores, list_of_legends, 'leaves', 'prequential_m', coref, std=True, step=100)
 
     # ************* END OF PLOTTING *****************************************************

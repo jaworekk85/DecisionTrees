@@ -2,8 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 import math
+import os
 
-MAIN_FOLDER = ''
+RESULTS_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results')
+MAIN_FOLDER = RESULTS_FOLDER + os.sep
+os.makedirs(RESULTS_FOLDER, exist_ok=True)
 
 
 def getNewNsList(oldlist, hNs):

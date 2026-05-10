@@ -25,11 +25,14 @@ class Attribute:
         return -1
 
     def getIndexNumerical(self, value):
-        for i in range(self.nbins):
-            if (self.range_a + i * self.dx) <= value < (self.range_a + i * self.dx + self.dx):
-                return i
+        value = float(value)
         if math.isclose(value, self.range_b):
             return self.nbins - 1
+        if value < self.range_a or value > self.range_b:
+            return -1
+        idx = math.floor((value - self.range_a) / self.dx + 1e-12)
+        if 0 <= idx < self.nbins:
+            return idx
         return -1
 
     def getIndex(self, value):

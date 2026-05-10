@@ -1,3 +1,4 @@
+import csv
 import math
 import numpy as np
 
@@ -7,12 +8,41 @@ class Tools:
     def transform_data_vector(data_true_vector, list_of_attributes, classes):
         data = []
         for i in range(len(data_true_vector) - 1):
-            data.append(list_of_attributes[i].getIndex(data_true_vector[i]))
-        data.append(classes.getIndex(data_true_vector[-1]))
+            value_index = list_of_attributes[i].getIndex(data_true_vector[i])
+            if value_index < 0:
+                raise ValueError('Unknown or out-of-range value for attribute ' + str(i) + ': ' + str(data_true_vector[i]))
+            data.append(value_index)
+        class_index = classes.getIndex(data_true_vector[-1])
+        if class_index < 0:
+            raise ValueError('Unknown class value: ' + str(data_true_vector[-1]))
+        data.append(class_index)
         return data
 
     @staticmethod
+    def load_csv_dataset(filename, list_of_attributes, classes, delimiter=',', has_header=True, class_index=-1):
+        dataset = []
+        with open(filename, newline='') as f:
+            reader = csv.reader(f, delimiter=delimiter)
+            if has_header:
+                next(reader, None)
+            for row in reader:
+                if not row:
+                    continue
+                if class_index < 0:
+                    actual_class_index = len(row) + class_index
+                else:
+                    actual_class_index = class_index
+                class_value = row[actual_class_index]
+                values = row[:actual_class_index] + row[actual_class_index + 1:] + [class_value]
+                dataset.append(Tools.transform_data_vector(values, list_of_attributes, classes))
+        return dataset
+
+    @staticmethod
     def two_best_measures(measures):
+        if len(measures) == 0:
+            raise ValueError('Cannot choose best split from an empty measure list')
+        if len(measures) == 1:
+            return (0, measures[0]), (-1, 0.0)
         max1 = measures[0]
         max2 = measures[1]
         id1 = 0

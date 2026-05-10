@@ -9,3 +9,6 @@ proc_*_drzewo_powstale_*.txt
 *_drzewo_powstale_*.txt
 
 *.pkl
+results/*.png
+results/trees/
+results/generators/
